@@ -58,7 +58,7 @@
 
 async function main(){
 
-    const request = await fetch('http://localhost:3000/products', {method: 'GET', headers:{'auth':localStorage.getItem('token')}})
+    const request = await fetch('/products', {method: 'GET', headers:{'auth':localStorage.getItem('token')}})
     const response =await request.json()
 
     console.log(response)
@@ -82,7 +82,7 @@ main()
 
 async function deleteProduct(id)
 {
-    const request = await fetch(`http://localhost:3000/products?id=${id}`, {method: 'DELETE'})
+    const request = await fetch(`/products?id=${id}`, {method: 'DELETE'})
     const response =await request.json()
     main()
 }
@@ -92,7 +92,7 @@ async function createProduct()
     let name = document.getElementById("product-name").value
     let price = document.getElementById("product-price").value
     let brand = document.getElementById("product-brand").value
-    const request = await fetch(`http://localhost:3000/products`, {method: 'POST',body:JSON.stringify({'name': name, 'price': price, 'brand': brand}) ,headers:{'auth':localStorage.getItem('token'),'content-type': "application/json"}})
+    const request = await fetch(`/products`, {method: 'POST',body:JSON.stringify({'name': name, 'price': price, 'brand': brand}) ,headers:{'auth':localStorage.getItem('token'),'content-type': "application/json"}})
     if(request.status != 201)
     {
         window.alert("Unable to Create Product!")
