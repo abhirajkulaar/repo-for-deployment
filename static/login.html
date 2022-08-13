@@ -1,0 +1,39 @@
+
+    <script>
+
+        async function loginUser()
+        {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+
+            let request = await fetch(`http://localhost:3000/login`, {method: "POST", body:JSON.stringify({'username': username, 'password': password}) , headers:{'content-type': "application/json"}})
+            let response = await request.json();
+
+            localStorage.setItem('token', response.token)
+        }
+
+        function logOut()
+        {
+            localStorage.removeItem('token')
+        }
+
+    </script>
+<body>
+
+    <div>
+        <label>username</label>
+        <input id="username" type="text">
+    </div>
+
+    <div>
+        <label>password</label>
+        <input id="password" type="text">
+    </div>
+
+
+    <button onclick="loginUser()">Login</button>
+
+    <button onclick="logOut()">Log Out</button>
+
+
+</body>

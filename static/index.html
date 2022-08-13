@@ -1,0 +1,107 @@
+
+    <style>
+
+        .item-container{
+            border: 3px solid black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+            width: 400px;
+        }
+        .title{
+            display: flex;
+        }
+        .container{
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
+
+<body>
+
+    <div id="container" class="container">
+
+
+
+    </div>
+
+
+    <div>
+
+        <div>
+            <label>Name</label>
+            <input id="product-name" type="text">
+        </div>
+        
+        
+        <div>
+            <label>Price</label>
+            <input id="product-price" type="number">
+        </div>
+
+        <div>
+            <label>Brand</label>
+            <input id="product-brand" type="text">
+            
+        </div>
+
+        <button onclick="createProduct()">Add Product</button>
+
+    </div>
+
+</body>
+
+
+
+<script>
+
+async function main(){
+
+    const request = await fetch('http://localhost:3000/products', {method: 'GET', headers:{'auth':localStorage.getItem('token')}})
+    const response =await request.json()
+
+    console.log(response)
+    document.getElementById("container").innerHTML = ""
+    for(let i =0;i< response.length; i++)
+    {
+        document.getElementById("container").innerHTML += 
+         `
+                <div class="item-container">
+            <div class="title">${response[i].name}</div>
+            <span>${response[i].brand} </span>
+            <span>Rs ${response[i].price}</span>
+            <button onclick="deleteProduct(${response[i].id})">Delete</button>
+        </div>
+        `
+    }
+}
+
+main()
+
+
+async function deleteProduct(id)
+{
+    const request = await fetch(`http://localhost:3000/products?id=${id}`, {method: 'DELETE'})
+    const response =await request.json()
+    main()
+}
+
+async function createProduct()
+{
+    let name = document.getElementById("product-name").value
+    let price = document.getElementById("product-price").value
+    let brand = document.getElementById("product-brand").value
+    const request = await fetch(`http://localhost:3000/products`, {method: 'POST',body:JSON.stringify({'name': name, 'price': price, 'brand': brand}) ,headers:{'auth':localStorage.getItem('token'),'content-type': "application/json"}})
+    if(request.status != 201)
+    {
+        window.alert("Unable to Create Product!")
+    }
+    else{
+    const response =await request.json()
+    window.alert("Created Sucessfully!")
+    }
+
+    main()
+}
+</script>

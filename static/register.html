@@ -1,0 +1,42 @@
+
+    <script>
+
+        async function registerUser()
+        {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            let firstName = document.getElementById("firstName").value;
+            let lastName = document.getElementById("lastName").value;
+
+            await fetch(`http://localhost:3000/users`, {method: "POST", body:JSON.stringify({'username': username, 'password': password, 'firstName': firstName, 'lastName': lastName}), headers:{'content-type': "application/json"} })
+        }
+
+    </script>
+<body>
+
+    <div>
+        <label>username</label>
+        <input id="username" type="text">
+    </div>
+
+    <div>
+        <label>password</label>
+        <input id="password" type="text">
+    </div>
+
+    <div>
+        <label>firstname</label>
+        <input id="firstName" type="text">
+    </div>
+
+
+    <div>
+        <label>lastname</label>
+        <input id="lastName" type="text">
+    </div>
+
+    <button onclick="registerUser()">Register</button>
+
+
+
+</body>
