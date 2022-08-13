@@ -64,7 +64,7 @@ app.get('/orders', function (req, res)
 } )
 
 try{
-app.listen(3002)
+app.listen(process.env.PORT)
 }
 catch(e)
 {console.log(e)}
