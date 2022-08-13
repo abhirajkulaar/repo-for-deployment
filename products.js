@@ -50,7 +50,7 @@ app.get('/products',async function (req, res) {
  
      let token = req.headers.auth;
      try{
-         var decoded = jwt.verify(token, myPrivateKey);
+         var decoded = verifyJWT(token);
          }
          catch(e){
              res.status(403).json({"message": "Unauthorized!"})
